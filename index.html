@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://hinkhoj.com/common/js/keyboard.js"></script>
+   
+    <link rel="stylesheet" type="text/css"
+    href="https://hinkhoj.com/common/css/keyboard.css" />
+    <link rel="shortcut icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAC7ElEQVR4nO2YvWsUQRiHV4l6sVCv0kTEQggGMRAEtVKQFIJWZ9DCTtFCi/iBUVOIjVWMQTSCf4CWYhEbz1L8jIWF0YCIiLkTxEjkjGDURya8iy/L7t7u3c7eHt4PBnZnfjM7z+7O7Puu47TUkn0BOWAUKJO8SsAVc400QEaxr5E0QMopgHxKAyQVtUCiqp672/RPxGkWEMfCuEmM+f+CxNQLGWdzmCkLIA+BncDzgPZLMs6RrIOcE98moOJpmwM6pL2YdZA5oFu8+4A/qu2U1PdWGyQLIEavgRXqFfoN3AIWAW3AM5oExOgB0C59+gyAHA8TQVkCMRo3T0H1DV3gWQV5BPT45DLngW/AHWAHsNz6pP0UAWASOAAsFv8G4C6wX42xsH4aKoL1BtitANqBQeC78twHNmYi0yRY75SnG/gY4NuViUyTcO0Vj9lmbwd4VqaYaZZqAZnQC1dencdeU8QbkpicmCDTwFppPw4ck+M1wAe/gbMAUvJ4TTzVqz5881L6VDhSqRNkBjgq5X1SICPKZ0KPgtR3yQX1xbukrSDeWkFuqH4XkgLJCYx5MkNSlwemfMYxdXnxDNUBslX1W+/elLpAfMDaqoTkRTfO8vSLqlfiX2WKEyEFqBVkLMJ41+sAOSP+w8AhOT6YOEjY5OJ4AzSvEjETTRdV1PA1KyBDnqTLT+Pi7QR+SemUupsNBZEJLJHjPcBsyDz6xXdS1Z2Quu2NBkEWq7ub9QR8G74Ay8SjM8qnaqxJKyAxYafUd8ZEAE88c7im+uR1cf7VD9p6IheJpxkVAeQkr3e1JcL1OmRDSP6JAGdjwpgFPKD6DwAv1bn5T+bVWzeFBu5ZAakBxg9k4RxYF7KzbRNPvzWQGK+Z36v1E1gtdadD+l4Vz1LgszWQEMBqi/2H5DYTsnMFqaJ8s40CibL9JiLHIsiY+llX8Pk/3BwgMUOUpgAp24YAptMA0ZmmLQ2nAaIzzaRVAi67sVpLLTl29ReyA60k9uMiDwAAAABJRU5ErkJggg=="/>
+    <title>HinType</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="./assets/index.css">
+ 
+</head>
+<body>
+
+    <div class="header">
+        <div class="dropdown">
+            <button class="dropbtn">Stories</button>
+            <div class="dropdown-content">
+                <div class="item" >
+                    <div id="box">
+                       
+                    </div>
+                </div>
+            </div>
+          </div>
+        <h3 class="text-2xl">Begin with your tHOughTs:-</h3>
+        <h4><a target="#" href="https://typer-db.vercel.app/">History</a></h4>
+    </div>
+    <div class="middle-section ">
+        <div class="text-input " >
+            <div class="hindi-text">
+
+                <script language="javascript">
+                    CreateCustomHindiTextArea("hindi-mode","",120 ,27,true);
+                    </script> 
+            </div>
+        </div> 
+    </div>
+    <div class="mnt">
+            
+            <button class="btn-fire" >Save To DataBase</button>
+            <button class="btn-clear" style="background-color: blueviolet;" >Clear</button>
+            <button class="btn-count w-16" >Show Count</button>
+     </div>
+     
+     <script src="./assets/script.js"></script>
+    <script type="module">
+        
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+       
+        const firebaseConfig = {
+          apiKey: "AIzaSyBCycUKn45idwrr82KzYz_8Y_2oESIJrsM",
+          authDomain: "typer-fca95.firebaseapp.com",
+          projectId: "typer-fca95",
+          storageBucket: "typer-fca95.appspot.com",
+          messagingSenderId: "831410671012",
+          appId: "1:831410671012:web:3832d0ed413b7eba4ac531",
+          measurementId: "G-R9DNWFJP8H"
+        };
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        import {collection , query ,doc, setDoc , getDocs,getFirestore } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+        const db = getFirestore(app)
+        function insertStory(){
+            let story = document.querySelector('textarea').value;
+            let title = prompt('Give Your Story a Title!!')
+            let date = new Date();
+            ///
+            if(!title || !story || !date)
+            {
+                alert("enter a valid title and story!!")
+                return;
+            }
+            const refr = doc(db , 'stories' , title);
+            setDoc(refr, {
+                title : title,
+                text : story,
+                date : date.toString()
+            })
+        }
+        async function setDropDown()
+        {
+            
+            let str = ""
+            const q = query(collection(db,'stories'));
+            const dataSnap = await getDocs(q);
+            dataSnap.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+                // console.log(doc.id, " => ", doc.data());
+                const data = doc.data()
+                ///
+                
+                const full_story = data.text;
+                const title = data.title
+                const story = data.text.slice(0,137) + "...."
+                str += `<div class="item" >
+                    <div id="box">
+                        <div class="title">${title}</div>
+                        <div class="story" onClick={${data.title}} >${story}</div>
+                    </div>
+                </div>`
+               
+            });
+            
+            // console.log(str)
+            // console.log(document.querySelector('.dropdown-content'))
+            document.querySelector('.dropdown-content').innerHTML = str
+         
+        }
+        // setInterval(setDropDown, 1000);
+       
+        setDropDown()
+        let tmp = document.querySelector('.btn-fire').addEventListener('click',insertStory);
+    </script>
+</body>
+
+</html>
