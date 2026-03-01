@@ -23,6 +23,36 @@ textarea{
     font-size: 16px;
     padding: 10px;
     background-color: rgb(23, 21, 21);
+    width: 100%;
+}
+
+.suggestions-dropdown {
+    position: absolute;
+    background-color: rgb(40, 38, 38);
+    border: 1px solid #555;
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.suggestion-item {
+    padding: 10px 12px;
+    cursor: pointer;
+    color: white;
+    border-bottom: 1px solid #333;
+    transition: background-color 0.2s;
+}
+
+.suggestion-item:hover,
+.suggestion-item.active {
+    background-color: rgb(60, 58, 58);
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
 }
 td{
     padding: 5px;
